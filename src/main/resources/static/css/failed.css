@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('/static/img/background.jpg') no-repeat center center fixed; /* Replace 'movie-background.jpg' with your image path */
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #f4f4f4; /* Light grey color for text */
+}
+
+.form-container {
+    width: 400px;
+    background: rgba(0, 0, 0, 0.8); /* Black with 80% opacity */
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.failed-message h2 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    color: #e50914; /* Netflix red color */
+}
+
+.failed-message p {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background: #e50914; /* Netflix red color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #b20710; /* Darker red for hover effect */
+}
