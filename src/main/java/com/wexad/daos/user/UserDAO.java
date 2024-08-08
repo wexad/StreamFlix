@@ -33,7 +33,11 @@ public class UserDAO extends BaseDAO<AuthUser, UUID> {
     @Override
     public UUID save(AuthUser entity) {
         String id = jdbcTemplate.queryForObject("SELECT save_user(?,?,?,?,?)",
-                String.class, entity.getName(), entity.getEmail(), entity.getPassword(), entity.getPhoneNumber(), null);
+                String.class,
+                entity.getName(),
+                entity.getEmail(),
+                entity.getPassword(),
+                entity.getPhoneNumber(), null);
         return Objects.nonNull(id) ? UUID.fromString(id) : null;
     }
 
@@ -45,7 +49,7 @@ public class UserDAO extends BaseDAO<AuthUser, UUID> {
 
     @Override
     public void delete(UUID uuid) {
-        String sql = "DELETE FROM users WHERE id=?;";
+        String sql = "UPDATE users SET isActive = false WHERE id=?;";
         jdbcTemplate.update(sql, uuid);
     }
 
