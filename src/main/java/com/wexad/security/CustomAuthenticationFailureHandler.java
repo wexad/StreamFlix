@@ -14,7 +14,6 @@ import java.io.IOException;
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        System.out.println("Authentication failed: " + exception.getMessage());
         response.sendRedirect(request.getContextPath() + "/failed");
     }
 }

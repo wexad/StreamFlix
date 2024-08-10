@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screens Management</title>
+    <link rel="stylesheet" href="../../static/css/admin-screens.css">
+</head>
+<body>
+<div>
+    <div class="sidebar">
+        <h2>ADMIN</h2>
+        <ul>
+            <li><a th:href="@{/home}">Main</a></li>
+            <li><a th:href="@{/admin/movies}">Movies</a></li>
+            <li><a th:href="@{/admin/theaters}">Theaters</a></li>
+            <li><a th:href="@{/admin/screens}">Screens</a></li>
+            <li><a th:href="@{/admin/users}">Users</a></li>
+            <li><a th:href="@{/admin/show}">Users</a></li>
+
+        </ul>
+        <a class="logout" th:href="@{/auth/logout}">Log out</a>
+    </div>
+
+    <h1>Manage Screens</h1>
+
+    <!-- Add Screen Link -->
+    <a th:unless="${showForm}" href="/admin/screens/add">Add Screen</a>
+    <div th:if="${showForm}">
+        <form th:action="@{/admin/screens/save}" method="post">
+            <div>
+                <label for="name">Screen Name:</label>
+                <input type="text" id="name" name="name" placeholder="Screen Name" required>
+            </div>
+            <div>
+                <label for="totalSeats">Total Seats:</label>
+                <input type="number" id="totalSeats" name="totalSeats" placeholder="Total Seats" required>
+            </div>
+            <div>
+                <label for="theater">Choose Theater:</label>
+                <select id="theater" name="theaterId" required>
+                    <option th:each="theater : ${theaters}" th:value="${theater.id}" th:text="${theater.name}">
+                        Theater Name
+                    </option>
+                </select>
+            </div>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+    <div th:if="${screens != null}">
+        <ul>
+            <li th:each="screen : ${screens}">
+                <p th:text="'Screen Name: ' + ${screen.name}">Screen Name</p>
+                <p th:text="'Total Seats: ' + ${screen.totalSeats}">Total Seats</p>
+                <p th:text="'Theater Name: ' + ${theaterMap[screen.theaterId]}">Theater Name</p>
+                <form th:action="@{/admin/show/{id}(id=${screen.id})}" method="get">
+                    <button type="submit">Add Show</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>

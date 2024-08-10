@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../../static/css/admin.css">
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <h2>ADMIN</h2>
+        <ul>
+            <li><a th:href="@{/home}">Main</a></li>
+            <li><a th:href="@{/admin/movies}">Movies</a></li>
+            <li><a th:href="@{/admin/theaters}">Theaters</a></li>
+            <li><a th:href="@{/admin/screens}">Screens</a></li>
+            <li><a th:href="@{/admin/users}">Users</a></li>
+            <li><a th:href="@{/admin/show}">Shows</a></li>
+        </ul>
+        <a class="logout" th:href="@{/auth/logout}">Log out</a>
+    </div>
+</div>
+</body>
+</html>

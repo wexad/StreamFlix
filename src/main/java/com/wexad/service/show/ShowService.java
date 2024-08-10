@@ -40,4 +40,8 @@ public class ShowService implements BaseService<Show, UUID> {
     public List<Show> findAll() {
         return showDAO.findAll();
     }
+
+    public List<Show> findByScreenId(UUID screenId) {
+        return showDAO.findByScreenId(screenId);
+    }
 }

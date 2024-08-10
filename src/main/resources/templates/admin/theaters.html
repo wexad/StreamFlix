@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Theaters</title>
+    <link rel="stylesheet" href="../../static/css/admin-theaters.css">
+</head>
+<body>
+<div>
+    <div class="sidebar">
+        <h2>ADMIN</h2>
+        <ul>
+            <li><a th:href="@{/home}">Main</a></li>
+            <li><a th:href="@{/admin/movies}">Movies</a></li>
+            <li><a th:href="@{/admin/theaters}">Theaters</a></li>
+            <li><a th:href="@{/admin/screens}">Screens</a></li>
+            <li><a th:href="@{/admin/users}">Users</a></li>
+            <li><a th:href="@{/admin/show}">Shows</a></li>
+        </ul>
+        <a class="logout" th:href="@{/auth/logout}">Log out</a>
+    </div>
+    <h1>Manage Theaters</h1>
+
+    <div th:unless="${showForm}" class="add-theater">
+        <a th:href="@{/admin/theaters/add}">> Add Theater</a>
+    </div>
+
+    <div th:if="${showForm}">
+        <form th:action="@{/admin/theaters/save}" method="post">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Theater Name" required>
+            </div>
+            <div>
+                <label for="location">Location:</label>
+                <input type="text" id="location"  name="location" placeholder="Theater Location" required>
+            </div>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+    <div class="theaters-list">
+        <h2>Theaters</h2>
+        <div th:if="${theaters != null}">
+            <ul>
+                <li th:each="theater : ${theaters}">
+                    <p th:text="${theater.name}">Theater Name</p>
+                    <p th:text="${theater.location}">Theater Location</p>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${theaters == null}">
+            <p>No theaters available.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -26,7 +26,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(req -> req
-                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/auth/**", "/home/**", "/static/**")
                 .permitAll()
                 .anyRequest()

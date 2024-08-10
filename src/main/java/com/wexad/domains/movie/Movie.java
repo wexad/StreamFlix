@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -13,10 +16,11 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie extends BaseDomain {
-    private String name;
     private String title;
     private String trailerUrl;
     private String genre;
     private Integer duration;
     private Double rating;
+    private LocalDate releaseDate;
+    private MultipartFile[] files;
 }

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Management</title>
+    <link rel="stylesheet" href="../../static/css/admin-movies.css">
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <h2>ADMIN</h2>
+        <ul>
+            <li><a th:href="@{/home}">Main</a></li>
+            <li><a th:href="@{/admin/movies}">Movies</a></li>
+            <li><a th:href="@{/admin/theaters}">Theaters</a></li>
+            <li><a th:href="@{/admin/screens}">Screens</a></li>
+            <li><a th:href="@{/admin/users}">Users</a></li>
+            <li><a th:href="@{/admin/show}">Shows</a></li>
+        </ul>
+        <a class="logout" th:href="@{/auth/logout}">Log out</a>
+    </div>
+    <div class="content">
+        <h1>Manage Movies</h1>
+
+        <div th:if="${showForm}" class="content">
+            <h1>Add Movie</h1>
+            <form th:action="@{/admin/movies/save}" method="post" enctype="multipart/form-data">
+                <div>
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" placeholder="Movie Title" required>
+                </div>
+                <div>
+                    <label for="releaseDate">Release Date:</label>
+                    <input type="date" id="releaseDate" name="releaseDate" required>
+                </div>
+                <div>
+                    <label for="genre">Genre:</label>
+                    <select id="genre" name="genre" required>
+                        <option th:each="genre : ${genres}" th:value="${genre.name()}" th:text="${genre.name()}">
+                            Genre
+                        </option>
+                    </select>
+                </div>
+                <div>
+                    <label for="duration">Duration (mins):</label>
+                    <input type="number" id="duration" name="duration" placeholder="Duration in minutes" required>
+                </div>
+                <div>
+                    <label for="trailerUrl">Trailer URL:</label> <!-- Changed name attribute to match the class property -->
+                    <input type="url" id="trailerUrl" name="trailerUrl" placeholder="https://example.com/trailer" required>
+                </div>
+                <div>
+                    <label for="files">Upload Image:</label>
+                    <input type="file" id="files" name="files" multiple="multiple">
+                </div>
+                <div>
+                    <button type="submit">Save Movie</button>
+                </div>
+            </form>
+        </div>
+
+
+        <div th:unless="${showForm}" class="add-movie">
+            <a th:href="@{/admin/movies/add}" class="btn btn-add">Add Movie</a>
+        </div>
+        <div class="movies-list">
+            <h2>Movies</h2>
+            <ul>
+                <li th:each="movie : ${movies}">
+                    <div class="movie-details">
+                        <p th:text="'Title: ' + ${movie.title}">Movie Title</p>
+                        <p th:text="'Release Date: ' + ${#temporals.format(movie.createdDate, 'dd-MM-yyyy')}">Release Date</p>
+                        <p th:text="'Genre: ' + ${movie.genre}">Genre</p>
+                        <p th:text="'Duration: ' + ${movie.duration} + ' mins'">Duration</p>
+                        <a th:href="@{${movie.trailerUrl}}" target="_blank">Watch Trailer</a>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

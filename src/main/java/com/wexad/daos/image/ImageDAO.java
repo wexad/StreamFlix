@@ -20,23 +20,24 @@ public class ImageDAO extends BaseDAO<Image, UUID> {
     private final RowMapper<Image> rowMapper = (rs, numRow) -> Image.builder()
             .id(UUID.fromString(rs.getString("id")))
             .mimeType(rs.getString("mimeType"))
-            .extension(rs.getString("extension"))
+            .originalName(rs.getString("originalName"))
             .isActive(rs.getBoolean("isActive"))
             .movieId(UUID.fromString(rs.getString("movieId")))
+            .extension(rs.getString("extension"))
             .createdDate(rs.getTimestamp("createdDate").toLocalDateTime())
             .build();
 
     @Override
     public UUID save(Image entity) {
-        String sql = "select save_image(?, ?, ?)";
-        String id = jdbcTemplate.queryForObject(sql, String.class, entity.getMimeType(), entity.getExtension(), entity.getMovieId());
+        String sql = "select save_image(?, ?, ?, ?, ?)";
+        String id = jdbcTemplate.queryForObject(sql, String.class, entity.getId().toString(), entity.getMimeType(), entity.getOriginalName(), entity.getMovieId().toString(), entity.getExtension());
         return Objects.nonNull(id) ? UUID.fromString(id) : null;
     }
 
     @Override
     public void update(Image entity) {
-        String sql = "UPDATE image SET mimeType = ?, extension = ?, isActive = ? WHERE id = ?";
-        jdbcTemplate.update(sql, entity.getMimeType(), entity.getExtension(), entity.isActive(), entity.getId());
+        String sql = "UPDATE image SET mimeType = ?, generatedName = ?, isActive = ? WHERE id = ?";
+        jdbcTemplate.update(sql, entity.getMimeType(), entity.getOriginalName(), entity.isActive(), entity.getId());
     }
 
     @Override

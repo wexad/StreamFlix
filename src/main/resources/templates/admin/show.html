@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Management</title>
+    <link rel="stylesheet" href="../../static/css/admin-show.css">
+</head>
+<body>
+<ul>
+    <li><a th:href="@{/home}">Main</a></li>
+    <li><a th:href="@{/admin/movies}">Movies</a></li>
+    <li><a th:href="@{/admin/theaters}">Theaters</a></li>
+    <li><a th:href="@{/admin/screens}">Screens</a></li>
+    <li><a th:href="@{/admin/users}">Users</a></li>
+    <li><a th:href="@{/admin/show}">Shows</a></li>
+</ul>
+<h1>Manage Shows</h1>
+
+<!-- Display shows -->
+<div th:if="${shows != null}">
+    <h2>Shows</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Show ID</th>
+            <th>Movie</th>
+            <th>Price</th>
+            <th>Show Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="show : ${shows}">
+            <td th:text="${show.id}">Show ID</td>
+            <td th:text="${moviesMap[show.movieId]}">Movie</td>
+            <td th:text="'$' + ${show.price}">Price</td>
+            <td>
+                <span th:text="|${show.showTime.toLocalDate()} ${show.showTime.toLocalTime().hour}:${show.showTime.toLocalTime().minute}|">Show Time</span>
+                <span th:if="${show.showTime == null}">N/A</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Form to add a new show -->
+<div th:if="${screenId != null}">
+    <form th:action="@{/admin/show/save}" method="post">
+        <input type="hidden" name="screenId" th:value="${screenId}"/>
+
+        <label for="movie">Select Movie:</label>
+        <select id="movie" name="movieId" required>
+            <option th:each="movie : ${movies}" th:value="${movie.id}" th:text="${movie.title}">Movie Title</option>
+        </select>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" required/>
+
+        <label for="showTime">Show Time:</label>
+        <input type="datetime-local" id="showTime" name="showTime" required/>
+
+        <button type="submit">Add Show</button>
+    </form>
+
+    <p><a th:href="@{/admin/screens}">Back to Screens</a></p>
+</div>
+
+</body>
+</html>

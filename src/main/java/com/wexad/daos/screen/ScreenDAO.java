@@ -9,11 +9,13 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
 @Component
 public class ScreenDAO extends BaseDAO<Screen, UUID> {
     protected ScreenDAO(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
+
     private final RowMapper<Screen> rowMapper = (rs, numRow) -> Screen.builder()
             .id(UUID.fromString(rs.getString("id")))
             .name(rs.getString("name"))
@@ -22,10 +24,11 @@ public class ScreenDAO extends BaseDAO<Screen, UUID> {
             .theaterId(UUID.fromString(rs.getString("theaterId")))
             .createdDate(rs.getTimestamp("createdDate").toLocalDateTime())
             .build();
+
     @Override
     public UUID save(Screen entity) {
         String sql = "select save_screen(?, ?, ?)";
-        String id = jdbcTemplate.queryForObject(sql, String.class, entity.getTheaterId(), entity.getName(), entity.getTotalSeats());
+        String id = jdbcTemplate.queryForObject(sql, String.class, entity.getTheaterId().toString(), entity.getName(), entity.getTotalSeats());
         return Objects.nonNull(id) ? UUID.fromString(id) : null;
     }
 
@@ -51,4 +54,5 @@ public class ScreenDAO extends BaseDAO<Screen, UUID> {
     public List<Screen> findAll() {
         return jdbcTemplate.query("SELECT * FROM screen", rowMapper);
     }
+
 }

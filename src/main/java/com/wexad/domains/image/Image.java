@@ -15,7 +15,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Image extends BaseDomain {
-    private String mimeType;
     private String extension;
+    private String mimeType;
+    private String originalName;
     private UUID movieId;
 }
+//private String originalName;  originalName
+//private String generatedName; id
+//private String mimeType;

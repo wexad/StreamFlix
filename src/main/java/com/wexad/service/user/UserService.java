@@ -68,4 +68,12 @@ public class UserService implements BaseService<AuthUser, UUID> {
             return Optional.empty();
         return Optional.ofNullable(dao.login(dto.getEmail(), dto.getPassword()));
     }
+
+    public void makeAdmin(UUID id) {
+        dao.makeAdmin(String.valueOf(id));
+    }
+
+    public void blockUser(UUID id) {
+        dao.blockUser(String.valueOf(id));
+    }
 }

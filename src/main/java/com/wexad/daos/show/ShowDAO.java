@@ -22,37 +22,43 @@ public class ShowDAO extends BaseDAO<Show, UUID> {
             .screenId(UUID.fromString(rs.getString("screenId")))
             .isActive(rs.getBoolean("isActive"))
             .createdDate(rs.getTimestamp("createdDate").toLocalDateTime())
+            .showTime(rs.getTimestamp("showTime").toLocalDateTime())
             .price(rs.getDouble("price"))
             .build();
 
     @Override
     public UUID save(Show entity) {
         String sql = "select save_show(?,?,?,?)";
-        String id = jdbcTemplate.queryForObject(sql, String.class, entity.getMovieId(), entity.getScreenId(), entity.getShowTime(), entity.getPrice());
+        String id = jdbcTemplate.queryForObject(sql, String.class, entity.getMovieId().toString(), entity.getScreenId().toString(), entity.getShowTime(), entity.getPrice());
         return Objects.nonNull(id) ? UUID.fromString(id) : null;
     }
 
     @Override
     public void update(Show entity) {
-        String sql = "UPDATE 'show' SET movieId=? AND screenId=? AND showTime=? AND price=? WHERE id=?;";
+        String sql = "UPDATE `show` SET movieId=? AND screenId=? AND showTime=? AND price=? WHERE id=?;";
         jdbcTemplate.update(sql, entity.getMovieId(), entity.getScreenId(), entity.getShowTime(), entity.getPrice());
     }
 
     @Override
     public void delete(UUID uuid) {
-        String sql = "UPDATE 'show' SET isActive = false WHERE id=?;";
+        String sql = "UPDATE `show` SET isActive = false WHERE id=?;";
         jdbcTemplate.update(sql, uuid);
     }
 
     @Override
     public Show findById(UUID uuid) {
-        String sql = "SELECT * FROM show WHERE id=?;";
+        String sql = "SELECT * FROM `show` WHERE id=?;";
         return jdbcTemplate.queryForObject(sql, rowMapper, uuid);
     }
-
     @Override
     public List<Show> findAll() {
-        String sql = "SELECT * FROM 'show';";
+        String sql = "SELECT * FROM `show`;";
         return jdbcTemplate.query(sql, rowMapper);
     }
+
+    public List<Show> findByScreenId(UUID screenId) {
+        String sql = "SELECT * FROM `show` WHERE screenId = ?";
+        return jdbcTemplate.query(sql, rowMapper, screenId.toString());
+    }
+
 }

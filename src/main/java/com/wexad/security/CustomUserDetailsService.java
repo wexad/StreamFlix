@@ -22,8 +22,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         System.out.println(email);
         AuthUser authUser = service.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found by email '%s'".formatted(email)));
-        System.out.println("User found: " + authUser);
-        System.out.println("Stored password (encoded): " + authUser.getPassword());
         return new CustomUserDetails(authUser);
     }
 }

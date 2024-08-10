@@ -78,8 +78,19 @@ public class UserDAO extends BaseDAO<AuthUser, UUID> {
         }
         return Optional.ofNullable(user);
     }
+
     public AuthUser login(@NonNull String email, @NonNull String password) {
         var sql = "SELECT * FROM users WHERE is_active AND username=? AND password=?;";
         return jdbcTemplate.queryForObject(sql, rowMapper, email, password);
+    }
+
+    public void makeAdmin(String  id) {
+        String sql = "UPDATE users SET role = 'ADMIN' WHERE id = ?;";
+        jdbcTemplate.update(sql, id);
+    }
+
+    public void blockUser(String id) {
+        String sql = "UPDATE users SET isActive = false WHERE id = ?;";
+        jdbcTemplate.update(sql, id);
     }
 }
