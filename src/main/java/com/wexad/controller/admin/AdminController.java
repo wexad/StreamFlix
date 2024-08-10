@@ -26,7 +26,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -121,7 +120,7 @@ public class AdminController {
     public String movies(Model model) {
         List<Movie> movies = movieService.findAll();
         model.addAttribute("movies", movies);
-        model.addAttribute("showForm", false);  // Hide form by default
+        model.addAttribute("showForm", false);
         return "admin/movies";
     }
 
@@ -159,15 +158,12 @@ public class AdminController {
     @PostMapping("/screens/save")
     public String saveScreen(@ModelAttribute Screen screen) {
         screenService.save(screen);
-        System.out.println(screen);
         return "redirect:/admin/screens";
     }
 
     @GetMapping("/users/makeAdmin/{id}")
     public String makeAdmin(@PathVariable("id") UUID id) {
         userService.makeAdmin(id);
-        System.out.println(id);
-        System.out.println("69b95c96-5591-11ef-9048-0a002700000e");
         return "redirect:/admin/users";
     }
 
@@ -184,24 +180,16 @@ public class AdminController {
         model.addAttribute("screenId", screenId);
         return "admin/show";
     }
+
     @GetMapping("/show")
     public String show(Model model) {
         List<Show> shows = showService.findAll();
         Map<UUID, String> moviesMap = movieService.findAll()
                 .stream().collect(Collectors.toMap(Movie::getId, Movie::getTitle));
-
-        // Debug output to ensure data is being passed correctly
-        System.out.println("Shows: " + shows);
-        System.out.println("Movies Map: " + moviesMap);
-
         model.addAttribute("shows", shows);
         model.addAttribute("moviesMap", moviesMap);
-
         return "admin/show";
     }
-
-
-
 
     @PostMapping("/show/save")
     public String saveShow(
@@ -216,9 +204,7 @@ public class AdminController {
                 .price(price)
                 .showTime(showTime)
                 .build();
-        showService.save(show); // Assuming you have a showService to save shows
-        return "redirect:/admin/show"; // Redirect to the screens page after saving
+        showService.save(show);
+        return "redirect:/admin/show";
     }
-
-
 }

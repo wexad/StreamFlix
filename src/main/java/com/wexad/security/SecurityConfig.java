@@ -31,7 +31,6 @@ public class SecurityConfig {
                 .anyRequest()
                 .fullyAuthenticated()
         );
-
         http.formLogin(login -> login
                 .loginPage("/auth/login")
                 .usernameParameter("email")
@@ -39,7 +38,6 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/home", true)
                 .failureHandler(authenticationFailureHandler)
         );
-
         http.logout(logout -> logout
                 .logoutUrl("/auth/logout")
                 .deleteCookies("JSESSIONID")
