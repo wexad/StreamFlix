@@ -1,9 +1,13 @@
 /* admin.css */
-body, html {
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/adminBackround.webp');
+    background-size: cover;
+    background-position: center;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    color: #333;
 }
 
 .container {
@@ -12,16 +16,15 @@ body, html {
 }
 
 .sidebar {
-    width: 200px;
-    background-color: #ffc107;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 250px;
     padding: 20px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .sidebar h2 {
-    color: #000;
+    color: #fff;
     text-align: center;
-    margin-bottom: 30px;
 }
 
 .sidebar ul {
@@ -30,69 +33,34 @@ body, html {
 }
 
 .sidebar ul li {
-    margin: 20px 0;
+    margin: 15px 0;
 }
 
 .sidebar ul li a {
-    color: #333;
+    color: #fff;
     text-decoration: none;
-    font-weight: bold;
+    display: block;
+    padding: 10px;
+    transition: background 0.3s;
 }
 
-.sidebar .logout {
+.sidebar ul li a:hover {
+    background-color: #333;
+    border-radius: 5px;
+}
+
+.logout {
     display: block;
     margin-top: 20px;
     text-align: center;
-    color: #d9534f;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.content {
-    flex: 1;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-}
-
-h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
-.add-movie, .add-theater, .add-screen {
-    margin-bottom: 20px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #c0392b;
     color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-ul li {
-    margin: 10px 0;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s;
 }
 
-img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    vertical-align: middle;
+.logout:hover {
+    background-color: #e74c3c;
 }

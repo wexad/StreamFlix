@@ -63,6 +63,12 @@ public class AdminController {
         return "admin/theaters";
     }
 
+    @PostMapping("/theaters/save")
+    public String saveTheater(@RequestParam("name") String name, @RequestParam("location") String location) {
+        theaterService.save(Theater.builder().location(location).name(name).build());
+        return "redirect:/admin/theaters";
+    }
+
     @GetMapping("/theaters/add")
     public String showAddTheaterForm(Model model) {
         model.addAttribute("showForm", true);

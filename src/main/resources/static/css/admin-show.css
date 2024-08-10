@@ -1,108 +1,65 @@
-/* General Body Style */
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
+/* admin-show.css */
+
+@import url('admin.css');
+
+h1, h2 {
+    color: #333;
+    margin-bottom: 20px;
 }
 
-/* Navigation Links */
-ul {
-    list-style: none;
-    padding: 0;
-    background-color: #333;
-    margin: 0;
-}
-
-ul li {
-    display: inline;
-    margin-right: 10px;
-}
-
-ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    display: inline-block;
-}
-
-ul li a:hover {
-    background-color: #575757;
-}
-
-/* Header */
-h1 {
-    text-align: center;
-    margin: 20px 0;
-}
-
-/* Table Styling */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin-bottom: 20px;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
+table th, table td {
+    border: 1px solid #ccc;
     padding: 10px;
     text-align: left;
 }
 
-th {
-    background-color: #f4f4f4;
+table th {
+    background-color: #f5f5f5;
 }
 
-/* Form Styling */
 form {
+    display: grid;
+    gap: 15px;
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
 }
 
 form label {
-    display: block;
-    margin: 10px 0 5px;
+    font-weight: bold;
 }
 
 form input, form select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 5px;
     border: 1px solid #ccc;
-    border-radius: 4px;
 }
 
 form button {
-    background-color: #4CAF50;
+    background-color: #27ae60;
     color: white;
+    padding: 10px 20px;
     border: none;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px 0;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 4px;
+    transition: background 0.3s;
 }
 
 form button:hover {
-    background-color: #45a049;
+    background-color: #2ecc71;
 }
 
-/* Links */
-p a {
-    color: #007BFF;
+a {
+    color: #27ae60;
     text-decoration: none;
+    transition: color 0.3s;
 }
 
-p a:hover {
-    text-decoration: underline;
+a:hover {
+    color: #2ecc71;
 }

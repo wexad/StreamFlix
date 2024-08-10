@@ -7,25 +7,22 @@
     <link rel="stylesheet" href="../../static/css/admin-screens.css">
 </head>
 <body>
-<div>
-    <div class="sidebar">
-        <h2>ADMIN</h2>
-        <ul>
-            <li><a th:href="@{/home}">Main</a></li>
-            <li><a th:href="@{/admin/movies}">Movies</a></li>
-            <li><a th:href="@{/admin/theaters}">Theaters</a></li>
-            <li><a th:href="@{/admin/screens}">Screens</a></li>
-            <li><a th:href="@{/admin/users}">Users</a></li>
-            <li><a th:href="@{/admin/show}">Users</a></li>
+<div class="sidebar">
+    <h2>ADMIN</h2>
+    <ul>
+        <li><a th:href="@{/home}">Main</a></li>
+        <li><a th:href="@{/admin/movies}">Movies</a></li>
+        <li><a th:href="@{/admin/theaters}">Theaters</a></li>
+        <li><a th:href="@{/admin/screens}">Screens</a></li>
+        <li><a th:href="@{/admin/users}">Users</a></li>
+        <li><a th:href="@{/admin/show}">Shows</a></li>
+    </ul>
+    <a class="logout" th:href="@{/auth/logout}">Log out</a>
+</div>
 
-        </ul>
-        <a class="logout" th:href="@{/auth/logout}">Log out</a>
-    </div>
-
+<div class="main-content">
     <h1>Manage Screens</h1>
-
-    <!-- Add Screen Link -->
-    <a th:unless="${showForm}" href="/admin/screens/add">Add Screen</a>
+    <a class="add-screen-link" th:unless="${showForm}" href="/admin/screens/add">Add Screen</a>
     <div th:if="${showForm}">
         <form th:action="@{/admin/screens/save}" method="post">
             <div>
@@ -49,7 +46,7 @@
     </div>
 
     <div th:if="${screens != null}">
-        <ul>
+        <ul class="screen-list">
             <li th:each="screen : ${screens}">
                 <p th:text="'Screen Name: ' + ${screen.name}">Screen Name</p>
                 <p th:text="'Total Seats: ' + ${screen.totalSeats}">Total Seats</p>
@@ -60,7 +57,6 @@
             </li>
         </ul>
     </div>
-
 </div>
 </body>
 </html>
