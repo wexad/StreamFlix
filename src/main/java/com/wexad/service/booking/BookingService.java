@@ -2,6 +2,7 @@ package com.wexad.service.booking;
 
 import com.wexad.daos.booking.BookingDAO;
 import com.wexad.domains.booking.Booking;
+import com.wexad.dto.DataDTO;
 import com.wexad.service.BaseService;
 import org.springframework.stereotype.Component;
 
@@ -39,5 +40,20 @@ public class BookingService implements BaseService<Booking, UUID> {
     @Override
     public List<Booking> findAll() {
         return bookingDAO.findAll();
+    }
+
+    public List<Booking> findByUserId(UUID userId) {
+        return bookingDAO.findByUserId(userId);
+    }
+
+    public Integer getCountOfTicketByUser(UUID userId, UUID showId) {
+        return bookingDAO.getCountOfTicketByUser(userId, showId);
+    }
+    public List<DataDTO> getData(UUID userId) {
+        return bookingDAO.getData(userId);
+    }
+
+    public Boolean isUserSawMovie(UUID userId, UUID movieId) {
+        return bookingDAO.isUserSawMovie(userId, movieId);
     }
 }

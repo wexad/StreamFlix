@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="${movie.title}">Movie Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/movies.css">
+</head>
+<body>
+<div class="leave-movies">
+    <form th:action="@{/home}" method="get">
+        <button type="submit" class="leave-button">Leave Movies</button>
+    </form>
+</div>
+<div class="container">
+    <h1 th:text="${movie.title}">Movie Title</h1>
+    <p><strong>Genre:</strong> <span th:text="${movie.genre}">Genre</span></p>
+    <p><strong>Release Date:</strong> <span th:text="${movie.releaseDate}">Release Date</span></p>
+    <p><strong>Duration:</strong> <span th:text="${movie.duration}">Duration</span></p>
+    <p><strong>Trailer:</strong>
+        <a th:if="${movie.trailerUrl}" th:href="@{${movie.trailerUrl}}" target="_blank" class="button">Watch Trailer</a>
+    </p>
+
+    <p th:if="${movie.rating != 0}"><strong>Rating:</strong> <span th:text="${movie.rating}">Rating</span></p>
+
+    <div class="image-gallery">
+        <h2>Image Gallery</h2>
+        <div class="images-grid">
+            <div th:each="path : ${paths}" class="image-card">
+                <img th:src="${path}" alt="Movie Image" class="gallery-image">
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <h3>Theaters and Showtimes:</h3>
+    <div th:each="theater : ${showDTOHashMap}">
+        <h4 th:text="${theater.key.name}">Theater Name</h4>
+        <table>
+            <thead>
+            <tr>
+                <th>Screen</th>
+                <th>Show Times</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="showDTO : ${theater.value}">
+                <td th:text="${showDTO.screen.name }">Screen Name</td>
+                <td>
+                    <ul>
+                        <li th:each="show : ${shows}">
+                            <form th:action="@{/showDetails}" method="get">
+                                <input type="hidden" name="showId" th:value="${show.id}"/>
+                                <button type="submit" th:text="|${show.showTime.hour}:${show.showTime.minute}|">
+                                    Show Time
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--<div th:if="currentUserCanWriteReview == true" class="review-section">-->
+<div  class="review-section">
+    <h3>Add Your Review</h3>
+    <form th:action="@{/submitReview}" method="post">
+        <input type="hidden" name="movieId" th:value="${movie.id}"/>
+
+        <label for="rating">Rating:</label>
+        <select name="rating" id="rating" required>
+            <option value="5">5 - Excellent</option>
+            <option value="4">4 - Good</option>
+            <option value="3">3 - Average</option>
+            <option value="2">2 - Poor</option>
+            <option value="1">1 - Terrible</option>
+        </select>
+
+        <label for="comment">Comment:</label>
+        <textarea name="comment" id="comment" rows="4" required></textarea>
+
+        <button type="submit">Submit Review</button>
+    </form>
+</div>
+<div>
+    <h3>Reviews</h3>
+    <ul>
+        <li th:each="entry : ${reviews}">
+            <strong th:text="${entry.key.id == currUserId ? 'Me' : entry.key.name}">User Name</strong>
+            <p>Rating: <span th:text="${entry.value.rating}">Rating</span></p>
+            <p>Comment: <span th:text="${entry.value.comment}">Comment</span></p>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

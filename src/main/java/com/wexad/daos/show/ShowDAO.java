@@ -36,19 +36,19 @@ public class ShowDAO extends BaseDAO<Show, UUID> {
     @Override
     public void update(Show entity) {
         String sql = "UPDATE `show` SET movieId=? AND screenId=? AND showTime=? AND price=? WHERE id=?;";
-        jdbcTemplate.update(sql, entity.getMovieId(), entity.getScreenId(), entity.getShowTime(), entity.getPrice());
+        jdbcTemplate.update(sql, entity.getMovieId().toString(), entity.getScreenId(), entity.getShowTime(), entity.getPrice());
     }
 
     @Override
     public void delete(UUID uuid) {
         String sql = "UPDATE `show` SET isActive = false WHERE id=?;";
-        jdbcTemplate.update(sql, uuid);
+        jdbcTemplate.update(sql, uuid.toString());
     }
 
     @Override
     public Show findById(UUID uuid) {
         String sql = "SELECT * FROM `show` WHERE id=?;";
-        return jdbcTemplate.queryForObject(sql, rowMapper, uuid);
+        return jdbcTemplate.queryForObject(sql, rowMapper, uuid.toString());
     }
     @Override
     public List<Show> findAll() {
@@ -60,5 +60,8 @@ public class ShowDAO extends BaseDAO<Show, UUID> {
         String sql = "SELECT * FROM `show` WHERE screenId = ?";
         return jdbcTemplate.query(sql, rowMapper, screenId.toString());
     }
-
+    public List<Show> findByMovieId(UUID movieId) {
+        String sql = "SELECT * FROM `show` WHERE movieId = ? AND showTime >= current_timestamp AND showTime < CURRENT_DATE + INTERVAL 2 DAY;";
+        return jdbcTemplate.query(sql, rowMapper, movieId.toString());
+    }
 }

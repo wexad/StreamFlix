@@ -35,19 +35,19 @@ public class ScreenDAO extends BaseDAO<Screen, UUID> {
     @Override
     public void update(Screen entity) {
         String sql = "UPDATE screen SET name = ?, totalSeats = ? WHERE id = ?";
-        jdbcTemplate.update(sql, entity.getName(), entity.getTotalSeats(), entity.getId());
+        jdbcTemplate.update(sql, entity.getName(), entity.getTotalSeats(), entity.getId().toString());
     }
 
     @Override
     public void delete(UUID uuid) {
         String sql = "UPDATE screen SET isActive = false WHERE id = ?";
-        jdbcTemplate.update(sql, uuid);
+        jdbcTemplate.update(sql, uuid.toString());
     }
 
     @Override
     public Screen findById(UUID uuid) {
         String sql = "SELECT * FROM screen WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, rowMapper, uuid);
+        return jdbcTemplate.queryForObject(sql, rowMapper, uuid.toString());
     }
 
     @Override

@@ -39,4 +39,8 @@ public class ReviewService implements BaseService<Review, UUID> {
     public List<Review> findAll() {
         return reviewDAO.findAll();
     }
+
+    public List<Review> findByMovieId(UUID movieId) {
+        return reviewDAO.findByMovieId(movieId);
+    }
 }

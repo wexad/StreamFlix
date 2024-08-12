@@ -37,23 +37,28 @@ public class ImageDAO extends BaseDAO<Image, UUID> {
     @Override
     public void update(Image entity) {
         String sql = "UPDATE image SET mimeType = ?, generatedName = ?, isActive = ? WHERE id = ?";
-        jdbcTemplate.update(sql, entity.getMimeType(), entity.getOriginalName(), entity.isActive(), entity.getId());
+        jdbcTemplate.update(sql, entity.getMimeType(), entity.getOriginalName(), entity.isActive(), entity.getId().toString());
     }
 
     @Override
     public void delete(UUID uuid) {
         String sql = "UPDATE image SET isActive = false WHERE id = ?";
-        jdbcTemplate.update(sql, uuid);
+        jdbcTemplate.update(sql, uuid.toString());
     }
 
     @Override
     public Image findById(UUID uuid) {
         String sql = "SELECT * FROM image WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, rowMapper, uuid);
+        return jdbcTemplate.queryForObject(sql, rowMapper, uuid.toString());
     }
 
     @Override
     public List<Image> findAll() {
         return jdbcTemplate.query("SELECT * FROM image", rowMapper);
+    }
+
+    public List<Image> findByMovieId(String movieId) {
+        String sql = "SELECT * FROM image WHERE movieId = ?";
+        return jdbcTemplate.query(sql, rowMapper, movieId);
     }
 }

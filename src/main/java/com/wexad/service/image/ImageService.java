@@ -40,4 +40,8 @@ public class ImageService implements BaseService<Image, UUID> {
     public List<Image> findAll() {
         return imageDAO.findAll();
     }
+
+    public List<Image> findByMovieId(UUID id) {
+        return imageDAO.findByMovieId(id.toString());
+    }
 }

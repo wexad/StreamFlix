@@ -56,19 +56,19 @@ public class MovieDAO extends BaseDAO<Movie, UUID> {
     @Override
     public void update(Movie entity) {
         String sql = "UPDATE movie SET title = ?, genre = ?, trailerUrl = ?, duration = ?, rating = ? WHERE id = ?";
-        jdbcTemplate.update(sql, entity.getTitle(), entity.getGenre(), entity.getTrailerUrl(), entity.getDuration(), entity.getRating(), entity.getId());
+        jdbcTemplate.update(sql, entity.getTitle(), entity.getGenre(), entity.getTrailerUrl(), entity.getDuration(), entity.getRating(), entity.getId().toString());
     }
 
     @Override
     public void delete(UUID uuid) {
         String sql = "UPDATE movie SET isActive = false WHERE id = ?";
-        jdbcTemplate.update(sql, uuid);
+        jdbcTemplate.update(sql, uuid.toString());
     }
 
     @Override
     public Movie findById(UUID uuid) {
         String sql = "SELECT * FROM movie WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, rowMapper, uuid);
+        return jdbcTemplate.queryForObject(sql, rowMapper, uuid.toString());
     }
 
     @Override

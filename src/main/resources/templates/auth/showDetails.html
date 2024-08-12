@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Details</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        h1 {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        h2, h3 {
+            margin: 10px 0;
+        }
+
+        /* Container Styles */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Seat Styles */
+        .seat {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #ddd;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.2s;
+            margin: 2px; /* Reduced margin for tight grid layout */
+        }
+
+        .seat:hover {
+            background-color: #ccc;
+            transform: scale(1.1);
+        }
+
+        .seat.selected {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .seat.orange-seat {
+            background-color: #ffa500;
+            color: white;
+        }
+
+        /* Grid Layout for Seats */
+        .seat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 4px; /* Space between seats */
+            justify-content: center; /* Center the grid horizontally */
+        }
+
+        /* Form Styles */
+        .leave-movies {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button.leave-button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        button.leave-button:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .seat {
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .seat {
+                width: 25px;
+                height: 25px;
+                line-height: 25px;
+            }
+
+            button.leave-button {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Show Details</h1>
+
+    <div>
+        <h2 th:text="${theater.name}">Theater Name</h2>
+        <h3 th:text="${screen.name}">Screen Name</h3>
+        <p><strong>Show Time:</strong> <span th:text="${show.showTime}">Show Time</span></p>
+        <p><strong>Price:</strong> <span th:text="${price}">Price</span></p>
+        <p><strong>Total Seats:</strong> <span th:text="${totalSeats}">Total Seats</span></p>
+    </div>
+
+    <div>
+        <h3>Select Your Seats:</h3>
+        <div class="seat-grid" th:each="seatNumber : ${#numbers.sequence(1, totalSeats)}">
+            <div
+                    th:classappend="${numbers.contains(seatNumber)} ? 'seat orange-seat' : 'seat'"
+                    th:text="${seatNumber}"
+                    th:attr="data-seat=${seatNumber}">
+            </div>
+        </div>
+    </div>
+
+    <div class="leave-movies">
+        <form th:action="@{/book-seats}" method="post">
+            <input type="hidden" name="showId" th:value="${show.id}">
+            <input type="hidden" name="selectedSeats" id="selectedSeats" value="">
+            <button type="submit" class="leave-button">Book Selected Seats</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.seat').forEach(seat => {
+        seat.addEventListener('click', function () {
+            this.classList.toggle('selected');
+            updateSelectedSeats();
+        });
+    });
+
+    function updateSelectedSeats() {
+        const selectedSeats = Array.from(document.querySelectorAll('.seat.selected'))
+            .map(seat => seat.getAttribute('data-seat'))
+            .join(',');
+        document.getElementById('selectedSeats').value = selectedSeats;
+    }
+</script>
+</body>
+</html>

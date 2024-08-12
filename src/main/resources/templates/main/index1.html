@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <meta name="description" content="Home page for accessing the application.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../static/css/index1.css">
+</head>
+<body>
+<h1>Home Page</h1>
+
+<div th:if="${user == null}">
+    <a th:href="@{/auth/login}">Log In</a>
+</div>
+
+<div sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/admin}">Admin Page</a>
+</div>
+<div sec:authorize="hasRole('USER')">
+    <a th:href="@{/profile}">Profile</a>
+</div>
+
+<!-- Search Form -->
+<form th:action="@{/search}" method="get" class="search-form">
+    <label>
+        <input type="text" name="query" placeholder="Search movies...">
+    </label>
+    <button type="submit">Search</button>
+</form>
+
+<section class="movie-list">
+    <div class="container">
+        <div class="movies-grid">
+            <div class="movie-card" th:each="movie : ${movies}">
+                <form th:action="@{/movies}" method="get" style="margin: 0; padding: 0;">
+                    <input name="movieId" type="hidden" th:value="${movie.id}">
+                    <button type="submit" class="movie-button">
+                        <img th:src="${images[movie.id]}" alt="Movie Poster" class="rounded" width="150" height="225">
+                    </button>
+                </form>
+                <h3 th:text="${movie.title}">Movie Title</h3>
+                <p th:text="${movie.genre}">Genre</p>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container Styles */
+        .container {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        /* Seat List Styles */
+        .seat-list {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .seat-list h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .seat {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Total Price Styles */
+        .total-price {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .total-price p {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .submit-button:active {
+            background-color: #004494;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Payment Details</h2>
+
+    <div class="seat-list">
+        <h3>Selected Seats:</h3>
+        <div th:text="${selectedSeats}">Seat 1, Seat 2</div>
+    </div>
+
+    <div class="total-price">
+        <p><strong>Total Price:</strong> $<span th:text="${price}">0.00</span></p>
+    </div>
+
+    <form th:action="@{/confirm-payment}" method="post" id="paymentForm">
+        <input type="hidden" name="showId" th:value="${showId}">
+        <input type="hidden" name="selectedSeats" id="selectedSeats" th:value="${selectedSeats}">
+
+        <div class="form-group">
+            <label for="cardNumber">Card Number:</label>
+            <input type="text" id="cardNumber" name="cardNumber" placeholder="Enter your card number" required>
+        </div>
+
+        <button type="submit" class="submit-button">Confirm Payment</button>
+    </form>
+</div>
+</body>
+</html>

@@ -44,19 +44,19 @@ public class UserDAO extends BaseDAO<AuthUser, UUID> {
     @Override
     public void update(AuthUser entity) {
         String sql = "UPDATE users SET name=? AND email=? AND password=? AND phoneNumber=? AND role=? WHERE id=?;";
-        jdbcTemplate.update(sql, entity.getName(), entity.getEmail(), entity.getPassword(), entity.getPhoneNumber(), entity.getRole(), entity.getId());
+        jdbcTemplate.update(sql, entity.getName(), entity.getEmail(), entity.getPassword(), entity.getPhoneNumber(), entity.getRole(), entity.getId().toString());
     }
 
     @Override
     public void delete(UUID uuid) {
         String sql = "UPDATE users SET isActive = false WHERE id=?;";
-        jdbcTemplate.update(sql, uuid);
+        jdbcTemplate.update(sql, uuid.toString());
     }
 
     @Override
     public AuthUser findById(UUID uuid) {
         String sql = "SELECT * FROM users WHERE id=?;";
-        return jdbcTemplate.queryForObject(sql, rowMapper, uuid);
+        return jdbcTemplate.queryForObject(sql, rowMapper, uuid.toString());
     }
 
     @Override

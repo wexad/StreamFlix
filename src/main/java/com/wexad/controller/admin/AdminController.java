@@ -179,6 +179,8 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
+
+
     @GetMapping("/show/{id}")
     public String showAddShowForm(@PathVariable("id") UUID screenId, Model model) {
         List<Movie> movies = movieService.findAll();

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Receipt</title>
+    <meta charset="UTF-8">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container Styles */
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #333;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 22px;
+            color: #444;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Receipt</h1>
+
+    <h2>Movie Details</h2>
+    <p><strong>Title:</strong> <span th:text="${movie.title}"></span></p>
+
+    <h2>Show Details</h2>
+    <p><strong>Show Time:</strong> <span th:text="${show.showTime}"></span></p>
+    <p><strong>Price:</strong> <span th:text="${show.price}"></span></p>
+
+    <h2>Screen Details</h2>
+    <p><strong>Screen Name:</strong> <span th:text="${screen.name}"></span></p>
+
+    <h2>Theater Details</h2>
+    <p><strong>Theater Name:</strong> <span th:text="${theater.name}"></span></p>
+    <p><strong>Theater Location:</strong> <span th:text="${theater.location}"></span></p>
+
+    <h2>Selected Seats</h2>
+    <ul>
+        <li th:each="seat : ${array}">
+            <span th:text="${seat}"></span>
+        </li>
+    </ul>
+
+    <h2>Price</h2>
+    <h3><strong>Price:</strong> <span th:text="${price}"></span></h3>
+
+    <a th:href="@{/home}">Back to Home</a>
+</div>
+</body>
+</html>

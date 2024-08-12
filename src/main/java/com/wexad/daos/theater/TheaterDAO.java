@@ -34,19 +34,19 @@ public class TheaterDAO extends BaseDAO<Theater, UUID> {
     @Override
     public void update(Theater entity) {
         String sql = "UPDATE theater SET name=? AND location=? where id = ?";
-        jdbcTemplate.update(sql, entity.getName(), entity.getLocation(), entity.getId());
+        jdbcTemplate.update(sql, entity.getName(), entity.getLocation(), entity.getId().toString());
     }
 
     @Override
     public void delete(UUID uuid) {
         String sql = "UPDATE theater SET isActive = false where id = ?";
-        jdbcTemplate.update(sql, uuid);
+        jdbcTemplate.update(sql, uuid.toString());
     }
 
     @Override
     public Theater findById(UUID uuid) {
         String sql = "select * from theater where id = ? and isActive = true";
-        return jdbcTemplate.queryForObject(sql, rowMapper, uuid);
+        return jdbcTemplate.queryForObject(sql, rowMapper, uuid.toString());
     }
 
     @Override

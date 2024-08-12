@@ -44,4 +44,8 @@ public class ShowService implements BaseService<Show, UUID> {
     public List<Show> findByScreenId(UUID screenId) {
         return showDAO.findByScreenId(screenId);
     }
+
+    public List<Show> findByMovieId(UUID movieId) {
+        return showDAO.findByMovieId(movieId);
+    }
 }
