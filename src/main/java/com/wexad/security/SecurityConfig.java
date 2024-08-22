@@ -45,7 +45,8 @@ public class SecurityConfig {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "GET"))
         );
         http.rememberMe(rememberMe -> rememberMe
-                .rememberMeParameter("rememberMe")
+//                .rememberMeParameter("rememberMe")
+                        .alwaysRemember(true)
                 .rememberMeCookieName("rem-me")
                 .tokenValiditySeconds(2 * 60 * 60)
                 .key("secret-key")
